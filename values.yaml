@@ -1,0 +1,45 @@
+# Default values for hp-ui.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameSpace: helm-default-ns
+replicaCount: 1
+containerPort: 8080
+svcType: ClusterIP
+svcPort: 8080
+
+cluster: dev
+imageRepository: <repo-link>
+
+appConfigMapName: appconfig
+
+# May change according to cluster/profile such as application-ci.properties or simply application.properties
+propertyFileName: application.properties
+
+# This should be removed once dev team fetches project and should not be used unless cross-project requirements are provided.
+googleProjectID: helm-google-project
+
+# healthCheck should always be enabled, this is added because applicaiton does not support it yet. Once app supports health check this should be deleted.
+healthCheckEnabled: false
+
+# http path for Ingress such as /service-name, make sure this is the application context
+# such as configuration-service, location-service, inventory-service etc.
+httpPath: /helm-default-application-service
+# This Host must have DNS setup with ingress loadbalancer IP or pass HostHeader
+ingressHost: helm-default-application.macys.com
+# Default should be false as helm renders boolean true as 'true' and succeeds, but never fails
+sslEnabled: false
+tlsSecret: helm-name-of-tls-secret
+
+# Secret name for pubsub and spanner
+pubSubSpannerSecretName: helm-default-pubsub-secret
+
+# Canary in nginx-ingress, default should always be false
+canaryEnabled: false
+canaryHeader: canary
+canaryWeight: 10
+
+# ServiceMonitor
+Team: oms-team
+TargetPort: 8080
+Interval: 1m
